@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+
+    <div id="vueRoot">
+        <label for="textareaPost">Ne düşünüyorsun?</label><br>
+        <textarea id="textareaPost" rows="10" cols="50" v-model="aktifGonderi"></textarea><br>
+        <button @click="gonderiEkle" :disabled="aktifGonderi == ''">Gönder</button>
+        <!-- false -->
+        <hr>
+        <!-- v-for bir Vue JS başvurusudur -->
+        <h2>Vue JS v-for</h2>
+        <hr>
+        <div v-for="(gonderi, index) in gonderiler" class="post">
+
+            {{ gonderi.mesaj }}
+            <br><br>
+            <b>{{ gonderi.yazar }}</b>
+            <br>
+            {{ gonderi.zaman }}
+            <br><br>
+            <button @click="begen($event)" :data-id="gonderi.id" class="like">Beğen ({{ gonderi.begeni }})</button>
+            <hr>
+        </div>
+    </div>
+
+
+    <!-- <h2>Vanilla JS</h2>
+    <div id="vanillaRoot">
+
+    </div> -->
+
+    <script>
+
+        //VANILLA JS SECTION
+        // const jsGonderiler = [
+        //     {
+        //         yazar: "Vue Bilmeyen Adam",
+        //         mesaj: "Vanilla JS çok sıkıcı...",
+        //         zaman: new Date(),
+        //     },
+        //     {
+        //         yazar: "Vue Sevmeyen Adam",
+        //         mesaj: "Vanilla JS şahane!",
+        //         zaman: new Date(),
+        //     }
+        // ];
+
+        // let vanillaRoot = document.querySelector("#vanillaRoot");
+
+        // for (let index = 0; index < jsGonderiler.length; index++) {
+
+        //     const gonderi = jsGonderiler[index];
+
+        //     let html = `
+        //         ${gonderi.mesaj}
+        //         <br><br>
+        //         <b>${gonderi.yazar}</b>
+        //         <br>
+        //         ${gonderi.zaman}
+        //         <hr>
+        //     `;
+
+        //     vanillaRoot.innerHTML += html;
+        // }
+
+
+        // VUE JS SECTION       
+        const { createApp } = Vue;
+
+        createApp({                         //VUE
+            data() {                        //VUE
+                return {
+                    aktifGonderi: '',
+                    gonderiler: [
+                        {
+                            id: Date.now(),
+                            yazar: 'Cem Sağında',
+                            zaman: '31.10.2022 11:27',
+                            mesaj: 'Vue JS derslerimiz başlamıştır.',
+                            begeni: 5
+                        },
+                        // {
+                        //     id: Date.now(),
+                        //     yazar: 'İsimsiz Kullanıcı',
+                        //     zaman: '31.10.2022 11:30',
+                        //     mesaj: 'Derse katıldım.'
+                        // }
+                    ]
+                }
+            },
+            methods: {                      //VUE
+                gonderiEkle() {
+                    let gonderi = {
+                        id: Date.now(),
+                        yazar: "Anonymous",
+                        zaman: new Date(),
+                        mesaj: this.aktifGonderi,
+                        begeni: 0
+                    }
+                    this.gonderiler.push(gonderi);
+
+                    console.log(this.gonderiler);
+
+                    this.aktifGonderi = '';
+                },
+                begen(event) {
+                    let gonderiId = event.target.attributes[0].value;
+                    this.gonderiler.forEach(gonderi => {
+                        if (gonderi.id == gonderiId) {
+                            gonderi.begeni++;
+                        }
+                    });
+
+                }
+            },
+            mounted() {                     //VUE
+
+                // API çağırıyormuş gibi yapalım...
+                // var gonderi1 = {
+                //     yazar: 'Cem Sağında',
+                //     zaman: '31.10.2022 11:27',
+                //     mesaj: 'Vue JS derslerimiz başlamıştır.'
+                // }
+                // this.gonderiler.push(gonderi1);
+
+                // var gonderi2 = {
+                //     yazar: 'İsimsiz Kullanıcı',
+                //     zaman: '31.10.2022 11:30',
+                //     mesaj: 'Derse katıldım.'
+                // }
+                // this.gonderiler.push(gonderi2);
+
+                console.log(this.gonderiler);
+            }
+        }).mount("#vueRoot");                  //VUE
+
+    </script>
+
+</body>
+
+</html>

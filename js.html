@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="app">
+        <h1 id="messageText1">Burada mesaj görünecek.</h1>
+        <input type="text" id="messageInput">
+        <button id="btnSend">Gönder</button>
+        <div style="margin-top: 16px">
+            <textarea id="textMessage" rows="10" disabled v-model="gonderilenMesaj"></textarea>
+        </div>
+    </div>
+
+    <script>
+
+        const messageText = document.getElementById("messageText1");
+        const messageInput = document.getElementById("messageInput");
+
+        messageInput.addEventListener("keyup", function () {
+            messageText1.textContent = messageInput.value;
+        })
+
+        const btnSend = document.getElementById("btnSend");
+        const textMessage = document.getElementById("textMessage");
+
+        btnSend.addEventListener("click", function () {
+            gonder();
+        })
+
+        function gonder() {
+            textMessage.value = messageInput.value;
+            messageInput.value = '';
+            messageText.textContent = '';
+        }
+
+    </script>
+
+</body>
+
+</html>

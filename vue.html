@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+
+        <h1>{{ message }} </h1>
+
+
+        <!-- <h1>Bu mesaj HTML template üzerinde statik durumdadır.</h1> -->
+
+        <input type="text" v-model="message">
+
+        <button id="btnSend" @click="gonder" :disabled="message == ''">Gönder</button>
+
+        <div style="margin-top: 16px" v-show="gonderilenMesaj != ''">
+            <textarea rows="10" disabled v-model="gonderilenMesaj"></textarea>
+            <div>
+                <button @click="likes++">Kısa Yoldan Beğen ({{ likes }})</button>
+                <button @click="like">Uzun Yoldan Beğen ({{ likes }})</button>
+            </div>
+        </div>
+
+        <!-- <button>Like</button> -->
+
+    </div>
+
+    <script>
+
+        //
+        // createApp metodu, Vue dosyasından gelen bir "module"dür.
+        const { createApp } = Vue;
+
+        // createApp modülü, Constructor (yapıcı metodlar) şeklinde çalışan, parametre olarak aldığı object ile birlikte Vue uygulaması oluşturan bir metoddur.
+        createApp({
+            // Vue uygulamamız için gerekli olan veriler tanımlanmaktadır.
+
+            // data() metodu, adından da anlaşılabileceği üzere, uygulamanın bilgi deposudur denilebilir.
+            data() {
+                return {
+                    message: '',
+                    gonderilenMesaj: '',
+                    likes: 0
+                }
+            },
+
+            // Uygulama üzerinde çalışacak olan methodlar burada tanımlanır.
+            methods: {
+                gonder() {
+                    this.gonderilenMesaj = this.message;
+                    this.message = '';
+                    this.likes = 0;
+                    console.log(this.gonderilenMesaj);
+                },
+                like() {
+                    // this.likes++;
+                    this.likes += 1;
+                }
+            },
+            mounted() {
+                // this.gonderilenMesaj = 'Bu uygulama başladığında var olan bir mesajdı.';
+                // this.likes = 10;
+            }
+        }).mount("#app")
+
+    </script>
+
+</body>
+
+</html>
